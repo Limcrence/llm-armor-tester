@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "armor-tester"
+version = "0.2.0"
+description = "LLM 破甲测试器：AI 应用自动化渗透测试（prompt 注入/越狱批量测试与判定）"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "SHIYI-WS" }]
+keywords = ["llm", "jailbreak", "prompt-injection", "pentest", "redteam"]
+dependencies = []
+
+[project.scripts]
+armor-tester = "armor_tester.cli:main"
+
+[tool.setuptools]
+packages = ["armor_tester"]

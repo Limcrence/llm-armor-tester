@@ -1,0 +1,25 @@
+# === 密钥与本地配置（严禁入库）===
+profiles.json
+*.key
+.env
+
+# === 测试数据与报告（本地生成物，含真实模型响应）===
+results/
+reports/
+logs/
+
+# === 构建产物 ===
+dist/
+build/
+*.egg-info/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# === 外部素材派生物（含第三方文本，需本地 import-goods 生成）===
+payloads/payloads_ref.jsonl
+
+# === 系统杂物 ===
+Thumbs.db
+.DS_Store
+*.log
