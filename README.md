@@ -12,19 +12,19 @@ AI 应用自动化渗透测试工具：对 **已授权** 的 OpenAI 兼容 API �
 prompt 注入 / 越狱攻击，判定是否破防（泄露 system prompt / 执行禁止动作 /
 输出违规），生成渗透报告。
 
-纯 Python 标准库实现（3.10+），零第三方依赖；PDF 需可选 `weasyprint`。
+Python 标准库实现（3.10+），零第三方依赖；PDF 需可选 `weasyprint`。
 
 ## 架构
 
 ```
-payload库(payloads/*.jsonl，内置50 + D:\Goods引入43 + 变异增殖600 = 693)
+payload库(payloads/*.jsonl，内置50 + D:\PROMPTS引入43 + 变异增殖600 = 693)
    → 并发执行引擎(采样/多轮链/间接注入载体/断点续作/CSV)
    → judge判定(规则 + 假装执行检测 + 模型judge)
    → 报告(Markdown/HTML/PDF + SVG图表 + 概率破防率 + 延迟侧信道)
    → 进化引擎(自动发现新越狱载荷) / 回归对比(修复前后差分)
 ```
 
-## 快速开始（三选一，从最省事到最灵活）
+## 快速开始（三选一）
 
 **① 双击 `scan.bat`** —— 交互向导，问几个问题就开跑，不用记任何命令：
 
@@ -65,8 +65,8 @@ cd "D:\A_P LLM破甲测试器"
 python -m armor_tester payloads stats
 python -m armor_tester payloads list
 
-# 2) 外部破甲词引入（D:\Goods：越狱大文本 + 越狱测试题 + 人设越狱词）
-python -m armor_tester import-goods --goods-root "D:\Goods" --out payloads/payloads_ref.jsonl
+# 2) 外部破甲词引入（D:\PROMPTS：越狱大文本 + 越狱测试题 + 人设越狱词）
+python -m armor_tester import-goods --goods-root "D:\PROMPTS" --out payloads/payloads_ref.jsonl
 
 # 3) 变异增殖：库扩到 600+（23 种变异算子，确定性可复现，带 parent_id 血缘）
 python -m armor_tester expand --target 600 --out payloads/payloads_mutated.jsonl
@@ -121,7 +121,7 @@ python -m armor_tester run --base-url http://127.0.0.1:8899/v1 --api-key mock `
 python -m armor_tester report --results results/mock.csv --out reports/mock.md
 ```
 
-## 差异化能力（同类工具少见）
+## 差异化能力
 
 | 能力 | 说明 |
 |---|---|
@@ -150,7 +150,7 @@ python -m armor_tester report --results results/mock.csv --out reports/mock.md
 | UNKNOWN | 无法判定 | 规则无证据 → 交模型 judge |
 | ERROR | 请求失败 | 网络/HTTP 错误，无有效回答 |
 
-## payload 库结构（JSONL，每行一条）
+## payload 库结构
 
 ```json
 {
@@ -164,7 +164,7 @@ python -m armor_tester report --results results/mock.csv --out reports/mock.md
 ```
 
 - 内置 50 条（P001–P050，15 类手法，P049/P050 为多轮链样本）
-- D:\Goods 引入 43 条（R 系列=越狱探针测试题 40；S 系列=越狱大文本/人设越狱词 3）
+- D:\PROMPTS 引入 43 条（R 系列=越狱探针测试题 40；S 系列=越狱大文本/人设越狱词 3）
 - 变异增殖 600 条（M 系列，23 种算子：编码/混淆/结构包裹）
 - 扩库：往 `payloads/` 追加任意 `*.jsonl`，id 全局唯一自动校验
 
@@ -174,20 +174,6 @@ python -m armor_tester report --results results/mock.csv --out reports/mock.md
 sample, turns, status, http_status, latency_ms, verdict, verdict_reasons,
 response_snippet, response_full, error, source, parent_id`
 
-## 交付状态
-
-| 步骤 | 交付物 | 状态 |
-|---|---|---|
-| 1 | payload 库 + D:\Goods 破甲词引入器 | ✅ |
-| 2 | 并发执行引擎（采样/多轮/载体/续作/CSV） | ✅ |
-| 3 | CLI（payloads/import-goods/expand/run/judge/report/evolve/diff） | ✅ |
-| 4 | judge（规则 + 假装执行检测 + 模型 judge） | ✅ |
-| 5 | 报告（MD/HTML/PDF + SVG + 概率破防 + 侧信道） | ✅ |
-| 6 | 进化引擎 + 回归对比 | ✅ |
-| 7 | 多轮攻击链编排器（状态机式 n 轮对话） | ✅ |
-| 8 | 零依赖 PDF（Edge/Chrome headless）+ QPS 限流 + 模型 judge 验证 | ✅ |
-| 9 | 真实授权端点实测 + 报告归档 | 待 TARGET/KEY（`tools\full_scan.ps1` 一键就绪） |
-| 10 | 打包发布（pip wheel + 单文件 exe） | ✅ |
 
 ## 真实端点一键实测（步骤 10）
 
@@ -227,4 +213,3 @@ powershell -ExecutionPolicy Bypass -File tools\full_scan.ps1 `
 2. **红线**：禁止未授权测试、绕过他人访问控制、数据窃取、制作传播恶意软件、干扰公共服务、违反任何司法辖区法律；
 3. **责任自负**：软件按"现状"提供，使用者是唯一责任主体，作者不承担任何连带责任；
 4. 本仓库不携带任何真实凭据、测试数据与第三方版权文本；测试报告外发前须自行脱敏；
-5. **授权不明 = 不得测试。拿不到书面授权，就不要运行本工具。**
