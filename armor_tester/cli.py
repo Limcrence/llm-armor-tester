@@ -391,7 +391,7 @@ def main(argv=None):
     sp.set_defaults(func=cmd_payloads)
 
     sp = sub.add_parser("import-goods", help="引入外部破甲词素材")
-    sp.add_argument("--goods-root", default=r"D:\PROMPTS", help="素材根目录（默认 D:\\PROMPTS）")
+    sp.add_argument("--goods-root", default="prompts", help="外部词库根目录（含越狱词/测试题的文件夹）")
     sp.add_argument("--out", default="payloads/payloads_ref.jsonl")
     sp.add_argument("--dedupe", action="store_true", help="追加并跳过已存在 id")
     sp.set_defaults(func=cmd_import_goods)
