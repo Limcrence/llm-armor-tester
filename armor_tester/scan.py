@@ -22,8 +22,8 @@ from .judge import rule_judge, llm_judge
 from .payloads import load_payloads, filter_payloads
 from . import report as report_mod
 
-QUICK_IDS = ("P001,P005,P006,P014,P015,P024,P027,P030,P032,P034,"
-             "P043,P044,P048,P049,P050,R001,R003,R030,S001,S002")
+QUICK_IDS = ("P101,P103,P104,P105,P106,P107,P112,P113,P115,P117,"
+             "P118,P002,P005,P006,P014,P024,P049,P050,R001,R030")
 
 PRESETS = {
     "quick":    {"ids": QUICK_IDS, "repeat": 1, "carrier": False, "chains": True},

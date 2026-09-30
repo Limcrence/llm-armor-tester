@@ -121,7 +121,7 @@ python -m armor_tester run --base-url http://127.0.0.1:8899/v1 --api-key mock `
 python -m armor_tester report --results results/mock.csv --out reports/mock.md
 ```
 
-## 差异化能力
+## 差异化能力（同类工具少见）
 
 | 能力 | 说明 |
 |---|---|
@@ -139,6 +139,7 @@ python -m armor_tester report --results results/mock.csv --out reports/mock.md
 | 零依赖 PDF | `report --pdf` 自动降级到 Edge/Chrome headless 打印 |
 | 断点续作 | `--resume` 按 payload+采样粒度续跑，中断无损 |
 | 载荷血缘 | 变异/进化产物带 `parent_id`，报告可追溯到原始载荷 |
+| 载荷质量（二代词库） | 按《模型越狱破甲原理》组件栈设计，替代老派"忽略指令/无审查模式"范式：**协议采纳**（交付执行协议/失败重写/输出净化禁词表）、**本体重塑**（文本即文本/语义展开）、**惰性夹具归一**（实体中和/合规属性截断）、**推理链劫持**（思维块预填/自我一致性陷阱）、**幻影权威**（伪造规范引用/评分函数劫持）、**格式越权**（格式约定优先于内容策略/对照流）、**审查倒取**（禁止清单倒取/删节恢复/档案恢复）——针对"原则可被上下文遮蔽"的 CAI 弱点设计 |
 
 ## 判定口径
 
@@ -150,7 +151,7 @@ python -m armor_tester report --results results/mock.csv --out reports/mock.md
 | UNKNOWN | 无法判定 | 规则无证据 → 交模型 judge |
 | ERROR | 请求失败 | 网络/HTTP 错误，无有效回答 |
 
-## payload 库结构
+## payload 库结构（JSONL，每行一条）
 
 ```json
 {
@@ -174,6 +175,20 @@ python -m armor_tester report --results results/mock.csv --out reports/mock.md
 sample, turns, status, http_status, latency_ms, verdict, verdict_reasons,
 response_snippet, response_full, error, source, parent_id`
 
+## 交付状态
+
+| 步骤 | 交付物 | 状态 |
+|---|---|---|
+| 1 | payload 库 + D:\PROMPTS 破甲词引入器 | ✅ |
+| 2 | 并发执行引擎（采样/多轮/载体/续作/CSV） | ✅ |
+| 3 | CLI（payloads/import-goods/expand/run/judge/report/evolve/diff） | ✅ |
+| 4 | judge（规则 + 假装执行检测 + 模型 judge） | ✅ |
+| 5 | 报告（MD/HTML/PDF + SVG + 概率破防 + 侧信道） | ✅ |
+| 6 | 进化引擎 + 回归对比 | ✅ |
+| 7 | 多轮攻击链编排器（状态机式 n 轮对话） | ✅ |
+| 8 | 零依赖 PDF（Edge/Chrome headless）+ QPS 限流 + 模型 judge 验证 | ✅ |
+| 9 | 真实授权端点实测 + 报告归档 | 待 TARGET/KEY（`tools\full_scan.ps1` 一键就绪） |
+| 10 | 打包发布（pip wheel + 单文件 exe） | ✅ |
 
 ## 真实端点一键实测（步骤 10）
 
@@ -213,3 +228,4 @@ powershell -ExecutionPolicy Bypass -File tools\full_scan.ps1 `
 2. **红线**：禁止未授权测试、绕过他人访问控制、数据窃取、制作传播恶意软件、干扰公共服务、违反任何司法辖区法律；
 3. **责任自负**：软件按"现状"提供，使用者是唯一责任主体，作者不承担任何连带责任；
 4. 本仓库不携带任何真实凭据、测试数据与第三方版权文本；测试报告外发前须自行脱敏；
+5. **授权不明 = 不得测试。拿不到书面授权，就不要运行本工具。**
